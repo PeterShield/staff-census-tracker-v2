@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BCP Monthly Team Report</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="topbar" aria-label="Report controls">
+        <div>
+          <p class="eyebrow">BCP Team History</p>
+          <h1>Monthly Headcount Report</h1>
+        </div>
+        <div class="controls">
+          <label>
+            <span>Start month</span>
+            <select id="startMonth" aria-label="Start month"></select>
+          </label>
+          <label>
+            <span>End month</span>
+            <select id="endMonth" aria-label="End month"></select>
+          </label>
+          <button id="runReport" class="primary-button" type="button">Run report</button>
+          <div class="quick-actions" aria-label="Date presets">
+            <button id="presetDefault" type="button">Jan 2001 - Dec 2025</button>
+            <button id="presetAll" type="button">All data</button>
+            <button id="downloadCsv" type="button">Download CSV</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="source-panel" aria-label="Spreadsheet source">
+        <div>
+          <p class="eyebrow">Spreadsheet source</p>
+          <h2>Use the sample data, upload a workbook, or paste a table</h2>
+        </div>
+        <div class="source-grid">
+          <label class="file-picker">
+            <span>Attach spreadsheet</span>
+            <input id="spreadsheetFile" type="file" accept=".xlsx,.csv,.tsv,.txt" />
+          </label>
+          <label class="paste-box">
+            <span>Paste spreadsheet rows</span>
+            <textarea id="pasteData" rows="4" placeholder="Paste rows with headers: EmployeeID, FirstNameShort, LastName, Start Date, Leaving Date, Birth date"></textarea>
+          </label>
+          <div class="source-actions">
+            <button id="loadPastedData" type="button">Use pasted data</button>
+            <button id="resetSampleData" type="button">Reset sample data</button>
+          </div>
+          <p id="sourceStatus" class="source-status">Sample data loaded: 258 employee rows.</p>
+        </div>
+      </section>
+
+      <section class="metrics" aria-label="Report totals">
+        <div>
+          <span>Months</span>
+          <strong id="monthCount">0</strong>
+        </div>
+        <div>
+          <span>Latest headcount</span>
+          <strong id="latestHeadcount">0</strong>
+        </div>
+        <div>
+          <span>Latest median age</span>
+          <strong id="latestMedianAge">0</strong>
+        </div>
+        <div>
+          <span>Total joiners</span>
+          <strong id="totalJoiners">0</strong>
+        </div>
+        <div>
+          <span>Total leavers</span>
+          <strong id="totalLeavers">0</strong>
+        </div>
+      </section>
+
+      <section class="view-switcher" aria-label="Report views">
+        <button class="view-button active-view" type="button" data-view="table">Table</button>
+        <button class="view-button" type="button" data-view="headcount">Employee count chart</button>
+        <button class="view-button" type="button" data-view="age">Median age chart</button>
+      </section>
+
+      <section class="table-wrap" aria-label="Monthly report">
+        <table>
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>People working</th>
+              <th>Median age</th>
+              <th>Team list</th>
+              <th>Joiners</th>
+              <th>Joiner list</th>
+              <th>Leavers</th>
+              <th>Leaver list</th>
+            </tr>
+          </thead>
+          <tbody id="reportBody"></tbody>
+        </table>
+      </section>
+
+      <section id="chartView" class="chart-wrap" aria-label="Monthly chart" hidden>
+        <div class="chart-head">
+          <div>
+            <p id="chartKicker" class="eyebrow">Chart</p>
+            <h2 id="chartTitle">Employee count</h2>
+          </div>
+        </div>
+        <canvas id="reportChart" width="1200" height="520" aria-label="Report chart"></canvas>
+      </section>
+    </main>
+
+    <dialog id="detailDialog">
+      <div class="dialog-head">
+        <div>
+          <p id="dialogKicker" class="eyebrow"></p>
+          <h2 id="dialogTitle"></h2>
+        </div>
+        <button id="closeDialog" class="icon-button" type="button" aria-label="Close">x</button>
+      </div>
+      <ol id="dialogList"></ol>
+    </dialog>
+
+    <script src="./jszip.min.js"></script>
+    <script src="./default-data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
